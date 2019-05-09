@@ -1,6 +1,7 @@
 #include <linux/kernel.h>
 #include <linux/kthread.h>
 #include <linux/sched/signal.h>
+#include <linux/string.h>
 #include <linux/tcp.h>
 
 #include "fastecho.h"
@@ -71,8 +72,11 @@ static int echo_server_worker(void *arg)
         printk(KERN_ERR MODULE_NAME ": kmalloc error....\n");
         return -1;
     }
+    printk(MODULE_NAME "strlen when malloc:%ld\n", strlen(buf));
+
 
     while (!kthread_should_stop()) {
+        memset(buf, '\0', BUF_SIZE);
         res = get_request(sock, buf, BUF_SIZE - 1);
         if (res <= 0) {
             if (res) {
