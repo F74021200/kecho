@@ -46,11 +46,11 @@ static int send_request(struct socket *sock, unsigned char *buf, size_t size)
     msg.msg_flags = 0;
 
     vec.iov_base = buf;
-    vec.iov_len = strlen(buf);
+    vec.iov_len = BUF_SIZE;
 
     printk(MODULE_NAME ": start send request.\n");
 
-    length = kernel_sendmsg(sock, &msg, &vec, 1, strlen(buf) - 1);
+    length = kernel_sendmsg(sock, &msg, &vec, 1, BUF_SIZE - 1);
 
     printk(MODULE_NAME ": send request = %s\n", buf);
 
